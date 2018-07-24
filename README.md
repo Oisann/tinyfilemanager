@@ -15,7 +15,7 @@ Download ZIP with latest version from master branch.
 
 Copy tinyfilemanager.php to your website folder and open it with web browser (e.g. http://yoursite/any_path/tinyfilemanager.php).
 
-Default username/password: admin/admin and user/12345. password has encripted with MD5.
+Default username/password: admin/admin and user/12345. Passwords are hashed using bcrypt and the password_hash function (with the default options).
 
 Warning: Please set your own username and password in $auth_users before use.
 
