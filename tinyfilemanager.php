@@ -12,10 +12,10 @@ $lang = 'en';
 // Auth with login/password (set true/false to enable/disable it)
 $use_auth = true;
 
-// Users: array('Username' => 'Password', 'Username2' => 'Password2', ...), Password has to encripted into MD5
+// Users: array('Username' => 'Password', 'Username2' => 'Password2', ...), Password has to be hashed using password_hash($PASSWORD_CLEAR, PASSWORD_DEFAULT)
 $auth_users = array(
-    'admin' => '21232f297a57a5a743894a0e4a801fc3', //admin
-    'user' => '827ccb0eea8a706c4c34a16891f84e7b', //12345
+    'admin' => '$2y$10$5btxYBNrj5jQ7QBaFm2UUu2eXHyapcU.7LZEdA2MVEDw9MeObHHmm', //admin
+    'user' => '$2y$10$FRdbYo7cu13FXmqTgHTV3eBDK/XcKY06b294Y5il7zCNRCt8uRMVa', //12345
 );
 
 // Readonly users (usernames array)
@@ -140,7 +140,7 @@ if ($use_auth) {
     } elseif (isset($_POST['fm_usr'], $_POST['fm_pwd'])) {
         // Logging In
         sleep(1);
-        if (isset($auth_users[$_POST['fm_usr']]) && md5($_POST['fm_pwd']) === $auth_users[$_POST['fm_usr']]) {
+        if (isset($auth_users[$_POST['fm_usr']]) && password_verify($_POST['fm_pwd'], $auth_users[$_POST['fm_usr']])) {
             $_SESSION['logged'] = $_POST['fm_usr'];
             fm_set_msg('You are logged in');
             fm_redirect(FM_SELF_URL . '?p=');
@@ -156,7 +156,7 @@ if ($use_auth) {
         fm_show_message();
         ?>
         <div class="path login-form">
-                <img src="https://image.ibb.co/k92AFQ/h3k_logo_dark.png" alt="H3K File manager" style="margin:20px;">
+            <img src="./h3k_logo_dark.png" alt="H3K File manager" style="margin:20px;">
             <form action="" method="post">
                 <label for="fm_usr">Username</label><input type="text" id="fm_usr" name="fm_usr" value="" placeholder="Username" required><br>
                 <label for="fm_pwd">Password</label><input type="password" id="fm_pwd" name="fm_pwd" value="" placeholder="Password" required><br>
